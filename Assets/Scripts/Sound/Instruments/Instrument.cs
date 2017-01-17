@@ -73,8 +73,6 @@ public class Instrument : MonoBehaviour
 	/// </summary>
 	public virtual void Play()
 	{
-		Debug.Log (GetCurrentTrack.Clip);
-
 		if (!mute)// && !GetAudioSource.isPlaying) //Might need to remove that second part
 		{
 			audioSource.PlayOneShot(GetCurrentTrack.Clip);

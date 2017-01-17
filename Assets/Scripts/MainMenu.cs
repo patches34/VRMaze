@@ -23,6 +23,14 @@ public class MainMenu : MonoBehaviour
 		networkMatch = gameObject.AddComponent<NetworkMatch>();
 	}
 
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			CreateRoom();
+		}
+	}
+
 	public void CreateRoom()
 	{
 		string matchName = "Test Room";
