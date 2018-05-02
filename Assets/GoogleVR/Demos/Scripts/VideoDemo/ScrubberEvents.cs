@@ -12,84 +12,82 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+namespace GoogleVR.VideoDemo {
+  using UnityEngine;
+  using UnityEngine.EventSystems;
+  using UnityEngine.UI;
 
-public class ScrubberEvents : MonoBehaviour {
-  private GameObject newPositionHandle;
+  public class ScrubberEvents : MonoBehaviour {
+    private GameObject newPositionHandle;
 
-  private Vector3[] corners;
-  private Slider slider;
+    private Vector3[] corners;
+    private Slider slider;
 
-  private VideoControlsManager mgr;
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-  GvrPointerInputModule inp;
-#endif
+    private VideoControlsManager mgr;
 
-  public VideoControlsManager ControlManager
-  {
-    set
-    {
-      mgr = value;
-    }
-  }
-
-  void Start() {
-    foreach (Image im in GetComponentsInChildren<Image>(true)) {
-      if (im.gameObject.name == "newPositionHandle") {
-        newPositionHandle = im.gameObject;
-        break;
+    public VideoControlsManager ControlManager {
+      set {
+        mgr = value;
       }
     }
 
-    corners = new Vector3[4];
-    GetComponent<Image>().rectTransform.GetWorldCorners(corners);
-    slider = GetComponentInParent<Slider>();
-  }
+    void Start() {
+      foreach (Image im in GetComponentsInChildren<Image>(true)) {
+        if (im.gameObject.name == "newPositionHandle") {
+          newPositionHandle = im.gameObject;
+          break;
+        }
+      }
 
-  void Update() {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    if (inp != null && inp.transform.position != Vector3.zero) {
-      newPositionHandle.transform.position = new Vector3(
-          inp.transform.position.x,
-          newPositionHandle.transform.position.y,
-          newPositionHandle.transform.position.z);
-    } else {
-      newPositionHandle.transform.position = slider.handleRect.transform.position;
+      corners = new Vector3[4];
+      GetComponent<Image>().rectTransform.GetWorldCorners(corners);
+      slider = GetComponentInParent<Slider>();
     }
-#endif
-  }
 
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-  public void OnPointerEnter(BaseEventData data) {
-    inp = data.currentInputModule as GvrPointerInputModule;
-    if (inp != null && inp.transform.position != Vector3.zero) {
-      newPositionHandle.transform.position = new Vector3(
-          inp.transform.position.x,
-          newPositionHandle.transform.position.y,
-          newPositionHandle.transform.position.z);
+    void Update() {
+      bool setPos = false;
+      if (GvrPointerInputModule.Pointer != null) {
+        RaycastResult r = GvrPointerInputModule.Pointer.CurrentRaycastResult;
+        if (r.gameObject != null) {
+          newPositionHandle.transform.position = new Vector3(
+              r.worldPosition.x,
+              newPositionHandle.transform.position.y,
+              newPositionHandle.transform.position.z);
+          setPos = true;
+        }
+      }
+      if (!setPos) {
+        newPositionHandle.transform.position = slider.handleRect.transform.position;
+      }
     }
-    newPositionHandle.SetActive(true);
-  }
 
-  public void OnPointerExit(BaseEventData data) {
-    inp = null;
-    newPositionHandle.SetActive(false);
-  }
+    public void OnPointerEnter(BaseEventData data) {
+      if (GvrPointerInputModule.Pointer != null) {
+        RaycastResult r = GvrPointerInputModule.Pointer.CurrentRaycastResult;
+        if (r.gameObject != null) {
+          newPositionHandle.transform.position = new Vector3(
+              r.worldPosition.x,
+              newPositionHandle.transform.position.y,
+              newPositionHandle.transform.position.z);
+        }
+      }
+      newPositionHandle.SetActive(true);
+    }
 
-  public void OnPointerClick(BaseEventData data) {
+    public void OnPointerExit(BaseEventData data) {
+      newPositionHandle.SetActive(false);
+    }
 
-    float minX = corners[0].x;
-    float maxX = corners[3].x;
+    public void OnPointerClick(BaseEventData data) {
+      float minX = corners[0].x;
+      float maxX = corners[3].x;
 
-    float pct = (newPositionHandle.transform.position.x - minX) / (maxX - minX);
+      float pct = (newPositionHandle.transform.position.x - minX) / (maxX - minX);
 
-    if (mgr != null) {
-      long p = (long)(slider.maxValue * pct);
-      mgr.Player.CurrentPosition = p;
+      if (mgr != null) {
+        long p = (long)(slider.maxValue * pct);
+        mgr.Player.CurrentPosition = p;
+      }
     }
   }
-
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

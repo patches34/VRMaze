@@ -54,10 +54,10 @@ Shader "GoogleVR/Reticle" {
       fragmentInput vert(vertexInput i) {
         float scale = lerp(_OuterDiameter, _InnerDiameter, i.vertex.z);
 
-        float4 vert_out = float4(i.vertex.x * scale, i.vertex.y * scale, _DistanceInMeters, 1.0);
+        float3 vert_out = float3(i.vertex.x * scale, i.vertex.y * scale, _DistanceInMeters);
 
         fragmentInput o;
-        o.position = mul (UNITY_MATRIX_MVP, vert_out);
+        o.position = UnityObjectToClipPos (vert_out);
         return o;
       }
 

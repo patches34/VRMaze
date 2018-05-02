@@ -292,7 +292,7 @@ RectTransform:
   m_AnchorMin: {x: 0.20300001, y: 0.04}
   m_AnchorMax: {x: 0.79700005, y: 0.08}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -0.000015258789}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &293026199
 RectTransform:
@@ -485,7 +485,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: 0.0037209068, w: -0.9999931}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.41400003}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2097420047}
   - {fileID: 780487871}
@@ -767,6 +767,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1137111031}
+--- !u!114 &732869598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 747062055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739800cd36aba44e9b04ce977e5784bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawDebugRays: 0
+  ignoreReversedGraphics: 1
+  blockingObjects: 0
+  blockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &747062055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,38 +1112,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 230187223}
---- !u!114 &1042767769
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 2053350985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646480bc4533c4141b3b669875b921bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnButtonClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1633499005}
-        m_MethodName: CloseSubPanels
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: GVR.Input.ButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  OnLostFocusClick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: GVR.Input.ButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!222 &1052060675
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1477,8 +1462,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 4.335}
+  m_SizeDelta: {x: 0, y: 0.53}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1291849241
 GameObject:
@@ -2038,18 +2023,7 @@ MonoBehaviour:
       PublicKeyToken=null
   OnAppDown:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 982932567}
-        m_MethodName: Toggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: GVR.Input.ButtonEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &1633499005
@@ -2072,7 +2046,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: 0.0098030325, w: -0.999952}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.09}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 2042328513}
   m_RootOrder: 2
@@ -2722,7 +2696,6 @@ GameObject:
   - 4: {fileID: 1834979375}
   - 114: {fileID: 1618335311}
   - 114: {fileID: 982932567}
-  - 114: {fileID: 1042767769}
   m_Layer: 0
   m_Name: ControllerManager
   m_TagString: Untagged
@@ -2818,7 +2791,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 650846444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 3}
+  m_LocalPosition: {x: 0, y: -0.204, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -2941,20 +2914,3 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &732869598
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 747062055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 739800cd36aba44e9b04ce977e5784bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  raycastMode: 0
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
-  blockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
