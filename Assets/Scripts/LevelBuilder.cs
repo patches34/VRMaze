@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using System;
 
 public class LevelBuilder : MonoBehaviour
 {
-	public GameObject tilePrefab, exitUiPrefab, playerStartGO;
-	public Vector3 tileScale;
+    [SerializeField]
+	GameObject tilePrefab, exitUiPrefab, playerStartGO;
+    [SerializeField]
+    Vector3 tileScale;
+    [SerializeField]
+    float playerYOffset;
 
-	public TextAsset file;
-	public List<List<GridTile>> tiles = new List<List<GridTile>>();
+    [SerializeField]
+    TextAsset file;
+    [SerializeField]
+    List<List<GridTile>> tiles = new List<List<GridTile>>();
 
 	const char k_EMPTY_TILE = ' ';
 	const char k_START = 's';
@@ -18,7 +25,8 @@ public class LevelBuilder : MonoBehaviour
 	const char k_EAST = 'E';
 	const char k_WEST = 'W';
 
-	public Player player;
+    [SerializeField]
+    Player player;
 
 	// Use this for initialization
 	void Start ()
@@ -28,7 +36,7 @@ public class LevelBuilder : MonoBehaviour
 
 	void BuildLevel(TextAsset levelFile)
 	{
-		List<string> rows = new List<string>(file.text.Split('\n'));
+		List<string> rows = new List<string>(file.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
 
 		Vector3 tilePos = Vector3.zero;
 
@@ -48,6 +56,7 @@ public class LevelBuilder : MonoBehaviour
 					if(rows[z][x].Equals(k_START))
 					{
 						playerStartGO.transform.position = tilePos;
+                        playerStartGO.transform.Translate(0, playerYOffset, 0);
 
 						if(rows[rows.Count - 1][0].Equals(k_SOUTH))
 						{
