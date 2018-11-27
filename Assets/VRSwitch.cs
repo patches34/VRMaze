@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.UI;
 
 public class VRSwitch : MonoBehaviour
 {
     [SerializeField]
     bool isRunningVR;
+
+    [SerializeField]
+    Text debug;
 
 	// Use this for initialization
 	void Start () {
@@ -68,6 +72,7 @@ public class VRSwitch : MonoBehaviour
 
     IEnumerator SwitchToVR()
     {
+        Input.gyro.enabled = false;
         // Device names are lowercase, as returned by `XRSettings.supportedDevices`.
         string desiredDevice = "cardboard";
 
@@ -115,5 +120,7 @@ public class VRSwitch : MonoBehaviour
                 cam.transform.localRotation = Quaternion.identity;
             }
         }
+
+        Input.gyro.enabled = true;
     }
 }
