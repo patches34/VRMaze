@@ -13,13 +13,68 @@ public class VRSwitch : MonoBehaviour
     [SerializeField]
     Text debug;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    int numberOfFingers = 2;
+    [SerializeField]
+    float holdTime = 1.5f;
+
+    [SerializeField]
+    Dictionary<int, float> fingerHoldTimes = new Dictionary<int, float>();
+
+    // Use this for initialization
+    void Start()
+    {
         isRunningVR = GvrIntent.IsLaunchedFromVr();
-	}
+    }
 
     void Update()
     {
+        //  Update finger hold times
+        foreach (Touch t in Input.touches)
+        {
+            switch (t.phase)
+            {
+                //  Add any new fingers
+                case TouchPhase.Began:
+                case TouchPhase.Moved:
+                    if (!fingerHoldTimes.ContainsKey(t.fingerId))
+                    {
+                        fingerHoldTimes.Add(t.fingerId, 0);
+                    }
+                    else
+                    {
+                        fingerHoldTimes[t.fingerId] = 0;
+                    }
+                    break;
+                //  Remove any gone fingers
+                case TouchPhase.Canceled:
+                case TouchPhase.Ended:
+                    fingerHoldTimes.Remove(t.fingerId);
+                    break;
+                //  Update the hold time for each finger
+                case TouchPhase.Stationary:
+                    fingerHoldTimes[t.fingerId] += t.deltaTime;
+                    break;
+            }
+        }
+        //  Check for 2 long hold press
+        if (fingerHoldTimes.Count >= numberOfFingers)
+        {
+            int longHoldCount = 0;
+
+            foreach (float t in fingerHoldTimes.Values)
+            {
+                if (t >= holdTime)
+                    ++longHoldCount;
+            }
+
+            if (longHoldCount >= numberOfFingers)
+            {
+                fingerHoldTimes.Clear();
+                ToggleCamera();
+            }
+        }
+
         if (XRSettings.enabled)
         {
             // Unity takes care of updating camera transform in VR.
@@ -58,7 +113,7 @@ public class VRSwitch : MonoBehaviour
 
     public void ToggleCamera()
     {
-        if(isRunningVR)
+        if (isRunningVR)
         {
             StartCoroutine(SwitchTo2D());
         }
