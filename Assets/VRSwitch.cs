@@ -17,8 +17,9 @@ public class VRSwitch : MonoBehaviour
     int numberOfFingers = 2;
     [SerializeField]
     float holdTime = 1.5f;
-
     [SerializeField]
+    float resetTime = 5f;
+
     Dictionary<int, float> fingerHoldTimes = new Dictionary<int, float>();
 
     // Use this for initialization
@@ -70,7 +71,11 @@ public class VRSwitch : MonoBehaviour
 
             if (longHoldCount >= numberOfFingers)
             {
-                fingerHoldTimes.Clear();
+                foreach (int fId in fingerHoldTimes.Keys)
+                {
+                    fingerHoldTimes[fId] = -resetTime;
+                }
+
                 ToggleCamera();
             }
         }
