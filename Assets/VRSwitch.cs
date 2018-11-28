@@ -17,8 +17,6 @@ public class VRSwitch : MonoBehaviour
     int numberOfFingers = 2;
     [SerializeField]
     float holdTime = 1.5f;
-    [SerializeField]
-    float resetTime = 5f;
 
     Dictionary<int, float> fingerHoldTimes = new Dictionary<int, float>();
 
@@ -37,7 +35,6 @@ public class VRSwitch : MonoBehaviour
             {
                 //  Add any new fingers
                 case TouchPhase.Began:
-                case TouchPhase.Moved:
                     if (!fingerHoldTimes.ContainsKey(t.fingerId))
                     {
                         fingerHoldTimes.Add(t.fingerId, 0);
@@ -46,34 +43,47 @@ public class VRSwitch : MonoBehaviour
                     {
                         fingerHoldTimes[t.fingerId] = 0;
                     }
+
+                    break;
+                //  Reset the hold time if a finger moves
+                case TouchPhase.Moved:
+                    if (fingerHoldTimes.ContainsKey(t.fingerId))
+                        fingerHoldTimes[t.fingerId] = 0;
+
                     break;
                 //  Remove any gone fingers
                 case TouchPhase.Canceled:
                 case TouchPhase.Ended:
-                    fingerHoldTimes.Remove(t.fingerId);
+                    if (fingerHoldTimes.ContainsKey(t.fingerId))
+                        fingerHoldTimes.Remove(t.fingerId);
+
                     break;
                 //  Update the hold time for each finger
                 case TouchPhase.Stationary:
-                    fingerHoldTimes[t.fingerId] += t.deltaTime;
+                    if(fingerHoldTimes.ContainsKey(t.fingerId))
+                        fingerHoldTimes[t.fingerId] += t.deltaTime;
+
                     break;
             }
         }
+        debug.text = fingerHoldTimes.Count.ToString();
         //  Check for 2 long hold press
-        if (fingerHoldTimes.Count >= numberOfFingers)
+        if (fingerHoldTimes.Count == numberOfFingers)
         {
             int longHoldCount = 0;
 
-            foreach (float t in fingerHoldTimes.Values)
+            foreach (int t in fingerHoldTimes.Values)
             {
+                debug.text += "\t" + t;
                 if (t >= holdTime)
                     ++longHoldCount;
             }
 
-            if (longHoldCount >= numberOfFingers)
+            if (longHoldCount == numberOfFingers)
             {
                 foreach (int fId in fingerHoldTimes.Keys)
                 {
-                    fingerHoldTimes[fId] = -resetTime;
+                    fingerHoldTimes.Remove(fId);
                 }
 
                 ToggleCamera();
