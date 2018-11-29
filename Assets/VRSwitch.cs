@@ -7,27 +7,25 @@ using UnityEngine.UI;
 
 public class VRSwitch : MonoBehaviour
 {
-    [SerializeField]
     bool isRunningVR;
-
-    [SerializeField]
-    Text debug;
 
     [SerializeField]
     int numberOfFingers = 2;
     [SerializeField]
-    float holdTime = 1.5f;
+    float holdTime = 1f;
 
     Dictionary<int, float> fingerHoldTimes = new Dictionary<int, float>();
 
     // Use this for initialization
     void Start()
     {
-        isRunningVR = GvrIntent.IsLaunchedFromVr();
+        isRunningVR = XRSettings.isDeviceActive;
     }
 
     void Update()
     {
+#if !UNITY_EDITOR
+        #region Gesture logic
         //  Update finger hold times
         foreach (Touch t in Input.touches)
         {
@@ -60,36 +58,49 @@ public class VRSwitch : MonoBehaviour
                     break;
                 //  Update the hold time for each finger
                 case TouchPhase.Stationary:
-                    if(fingerHoldTimes.ContainsKey(t.fingerId))
-                        fingerHoldTimes[t.fingerId] += t.deltaTime;
+                    if (fingerHoldTimes.ContainsKey(t.fingerId))
+                    {
+                        if(Input.touchCount == numberOfFingers)
+                        {
+                            fingerHoldTimes[t.fingerId] += t.deltaTime;
+                        }
+                        else
+                        {
+                            fingerHoldTimes[t.fingerId] = 0;
+                        }
+                        
+                    }
 
                     break;
             }
         }
-        debug.text = fingerHoldTimes.Count.ToString();
+
         //  Check for 2 long hold press
         if (fingerHoldTimes.Count == numberOfFingers)
         {
-            int longHoldCount = 0;
+            List<int> fingerIds = new List<int>();
 
-            foreach (int t in fingerHoldTimes.Values)
+            //  Get the ids for all the touches that have been long presses
+            foreach (KeyValuePair<int, float> f in fingerHoldTimes)
             {
-                debug.text += "\t" + t;
-                if (t >= holdTime)
-                    ++longHoldCount;
+                if (f.Value >= holdTime)
+                    fingerIds.Add(f.Key);
             }
 
-            if (longHoldCount == numberOfFingers)
+            //  Check if there are enough touches
+            if (fingerIds.Count == numberOfFingers)
             {
-                foreach (int fId in fingerHoldTimes.Keys)
+                foreach (int id in fingerIds)
                 {
-                    fingerHoldTimes.Remove(fId);
+                    fingerHoldTimes.Remove(id);
                 }
-
+                
                 ToggleCamera();
             }
         }
+        #endregion
 
+        #region Camera logic
         if (XRSettings.enabled)
         {
             // Unity takes care of updating camera transform in VR.
@@ -124,9 +135,11 @@ public class VRSwitch : MonoBehaviour
 
           // So image is not upside down.
           Quaternion.Euler(0f, 0f, 180f);
+        #endregion
+#endif
     }
 
-    public void ToggleCamera()
+    void ToggleCamera()
     {
         if (isRunningVR)
         {
