@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
+using UnityEngine.UI;
 
 public class LevelBuilder : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class LevelBuilder : MonoBehaviour
 
 	void BuildLevel(TextAsset levelFile)
 	{
-		List<string> rows = new List<string>(file.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+        List<string> rows = new List<string>(file.text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries));
 
 		Vector3 tilePos = Vector3.zero;
 
