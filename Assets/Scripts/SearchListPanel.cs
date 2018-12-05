@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public class SearchListPanel : MonoBehaviour
 {
-	public GameObject roomBtnPrefab;
+    [SerializeField]
+	GameObject roomBtnPrefab;
+
+    [SerializeField]
+    Transform gamesTransform;
 
 	public MainMenu main;
 
@@ -22,9 +26,9 @@ public class SearchListPanel : MonoBehaviour
 
 	void OnDisable()
 	{
-		for(int i = 0; i < transform.childCount; ++i)
+		for(int i = 0; i < gamesTransform.childCount; ++i)
 		{
-			Destroy(transform.GetChild(i).gameObject, 0.1f);
+			Destroy(gamesTransform.GetChild(i).gameObject, 0.1f);
 		}
 	}
 
@@ -32,7 +36,7 @@ public class SearchListPanel : MonoBehaviour
 	{
 		foreach(MatchInfoSnapshot match in matches)
 		{
-			GameObject newMatch = (GameObject)Instantiate(roomBtnPrefab, transform);
+			GameObject newMatch = (GameObject)Instantiate(roomBtnPrefab, gamesTransform);
 
 			roomInfo room = newMatch.GetComponent<roomInfo>();
 
