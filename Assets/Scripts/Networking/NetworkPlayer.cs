@@ -12,13 +12,20 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField]
     int id;
 
+    [SyncVar, SerializeField]
+    Color playerColor = Color.white;
+
 	void Start()
 	{
 		if(!isLocalPlayer)
 		{
 			player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2);
 		}
-	}
+        else
+        {
+            playerColor = new Color(Random.value, Random.value, Random.value);
+        }
+    }
 
 	public override void OnStartLocalPlayer ()
 	{
@@ -37,11 +44,11 @@ public class NetworkPlayer : NetworkBehaviour
 
 	void Update()
 	{
-        if(id == 0)
+        if(sprite.color != playerColor)
         {
-            id = (int)netId.Value;
-            sprite.color = new Color(Random.value, Random.value, Random.value);
+            sprite.color = playerColor;
         }
+
 		if(!isLocalPlayer && player != null)
 		{
 			if(transform.position == player.position)
