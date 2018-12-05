@@ -18,6 +18,9 @@ public class MainMenu : MonoBehaviour
 
 	MatchInfo currentMatch;
 
+    [SerializeField]
+    InputField gameName;
+
 	void Awake()
 	{
 		networkMatch = gameObject.AddComponent<NetworkMatch>();
@@ -33,7 +36,7 @@ public class MainMenu : MonoBehaviour
 
 	public void CreateRoom()
 	{
-		string matchName = "Test Room";
+		string matchName = gameName.text;
 		uint matchSize = 4;
 		bool matchAdvertise = true;
 		string matchPassword = "";
