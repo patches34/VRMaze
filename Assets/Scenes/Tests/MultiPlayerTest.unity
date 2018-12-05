@@ -2239,10 +2239,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.804, g: 0.804, b: 0.804, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.47, g: 0.47, b: 0.47, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2437,6 +2437,26 @@ Prefab:
         type: 2}
       propertyPath: numberOfFingers
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822827391595904, guid: ee54b46a851376c4c8226100372bcc33,
+        type: 2}
+      propertyPath: maxLaserDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114822827391595904, guid: ee54b46a851376c4c8226100372bcc33,
+        type: 2}
+      propertyPath: shrinkLaser
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114046278508259614, guid: ee54b46a851376c4c8226100372bcc33,
+        type: 2}
+      propertyPath: raycastMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114046278508259614, guid: ee54b46a851376c4c8226100372bcc33,
+        type: 2}
+      propertyPath: overrideCameraRayIntersectionDistance
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee54b46a851376c4c8226100372bcc33, type: 2}
@@ -2819,6 +2839,22 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1731572833}
   m_CullTransparentMesh: 0
+--- !u!1 &1842943702 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 195966, guid: 8524bbe5e592a42dc9251484a73c9c7f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1577930450}
+--- !u!114 &1842943705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1842943702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bec9ea3efe7849ffae666549aca3cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1868483707
 GameObject:
   m_ObjectHideFlags: 0
@@ -3475,10 +3511,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.804, g: 0.804, b: 0.804, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.47, g: 0.47, b: 0.47, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

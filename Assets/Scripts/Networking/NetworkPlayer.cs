@@ -12,8 +12,8 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField]
     int id;
 
-    [SyncVar, SerializeField]
-    Color playerColor = Color.white;
+    [SyncVar]
+    Color playerColor;
 
 	void Start()
 	{
