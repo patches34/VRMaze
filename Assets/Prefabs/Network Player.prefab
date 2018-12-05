@@ -95,6 +95,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sprite: {fileID: 212000014070399110}
   yOffset: 0
+  id: 0
 --- !u!114 &114000012243702048
 MonoBehaviour:
   m_ObjectHideFlags: 1

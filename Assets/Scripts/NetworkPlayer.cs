@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class NetworkPlayer : NetworkBehaviour
@@ -8,6 +8,9 @@ public class NetworkPlayer : NetworkBehaviour
 	public SpriteRenderer sprite;
 
 	public float yOffset;
+
+    [SerializeField]
+    int id;
 
 	void Start()
 	{
@@ -34,6 +37,11 @@ public class NetworkPlayer : NetworkBehaviour
 
 	void Update()
 	{
+        if(id == 0)
+        {
+            id = (int)netId.Value;
+            sprite.color = new Color(Random.value, Random.value, Random.value);
+        }
 		if(!isLocalPlayer && player != null)
 		{
 			if(transform.position == player.position)
