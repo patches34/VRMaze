@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
+[RequireComponent (typeof(SpriteRenderer))]
 public class NetworkPlayer : NetworkBehaviour
 {
-	public Transform player;
-	public SpriteRenderer sprite;
-
-	public float yOffset;
-
     [SerializeField]
-    int id;
+	Transform player;
+
+	SpriteRenderer sprite;
 
     [SyncVar]
     Color playerColor;
@@ -25,6 +23,8 @@ public class NetworkPlayer : NetworkBehaviour
         {
             playerColor = new Color(Random.value, Random.value, Random.value);
         }
+
+        sprite = GetComponent<SpriteRenderer>();
     }
 
 	public override void OnStartLocalPlayer ()
@@ -32,8 +32,6 @@ public class NetworkPlayer : NetworkBehaviour
 		GameObject p = GameObject.FindGameObjectWithTag("Player");
 
 		transform.SetParent(p.transform);
-
-		transform.Translate(0, yOffset, 0);
 
 		sprite.enabled = false;
 
@@ -44,17 +42,21 @@ public class NetworkPlayer : NetworkBehaviour
 
 	void Update()
 	{
+        //  Set the player's icon color
         if(sprite.color != playerColor)
         {
             sprite.color = playerColor;
         }
 
+        //  Update the other player's icon
 		if(!isLocalPlayer && player != null)
 		{
+            //  hide it if they are on the same tile as you
 			if(transform.position == player.position)
 			{
 				sprite.enabled = false;
 			}
+            //  Show it and make it point towards you if not on your tile
 			else
 			{
 				sprite.enabled = true;
