@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour
 	public GridTile currentTile;
 
 	public GameObject rayBlocker;
+
+    [SerializeField]
+    Image hudIcon;
 
 	public void MoveTo(GridTile tile)
 	{
@@ -56,4 +60,11 @@ public class Player : MonoBehaviour
 
 		transform.rotation = lookAt;
 	}
+
+    public void SetPLayerColor(Color color)
+    {
+        hudIcon.color = color;
+
+        hudIcon.enabled = true;
+    }
 }

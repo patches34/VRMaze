@@ -93,10 +93,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  sprite: {fileID: 212000014070399110}
-  yOffset: 0
-  id: 0
-  playerColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114000012243702048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.1
+  m_SendInterval: 0
   m_SyncRotationAxis: 0
   m_RotationSyncCompression: 0
   m_SyncSpin: 0

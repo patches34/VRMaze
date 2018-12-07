@@ -13,18 +13,24 @@ public class NetworkPlayer : NetworkBehaviour
     [SyncVar]
     Color playerColor;
 
-	void Start()
+    private void Awake()
+    {
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
+    void Start()
 	{
 		if(!isLocalPlayer)
 		{
 			player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(2);
 		}
+        //  Only set the color for the local player
         else
         {
             playerColor = new Color(Random.value, Random.value, Random.value);
-        }
 
-        sprite = GetComponent<SpriteRenderer>();
+            transform.GetComponentInParent<Player>().SetPLayerColor(playerColor);
+        }
     }
 
 	public override void OnStartLocalPlayer ()
@@ -37,7 +43,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 		p.GetComponent<Player>().rayBlocker.SetActive(false);
 
-		base.OnStartLocalPlayer();
+        base.OnStartLocalPlayer();
 	}
 
 	void Update()
