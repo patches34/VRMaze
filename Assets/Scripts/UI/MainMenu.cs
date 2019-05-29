@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.Networking.Match;
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-	List<MatchInfoSnapshot> matchList = new List<MatchInfoSnapshot>();
+	//List<MatchInfoSnapshot> matchList = new List<MatchInfoSnapshot>();
 	bool matchCreated;
-	NetworkMatch networkMatch;
+	//NetworkMatch networkMatch;
 
 	public SearchListPanel searchPanel;
 
@@ -16,14 +15,14 @@ public class MainMenu : MonoBehaviour
 
 	public NetworkManager networkMan;
 
-	MatchInfo currentMatch;
+	//MatchInfo currentMatch;
 
     [SerializeField]
     InputField gameName;
 
 	void Awake()
 	{
-		networkMatch = gameObject.AddComponent<NetworkMatch>();
+		//networkMatch = gameObject.AddComponent<NetworkMatch>();
 	}
 
 	void Update()
@@ -41,10 +40,10 @@ public class MainMenu : MonoBehaviour
 		bool matchAdvertise = true;
 		string matchPassword = "";
 
-		networkMatch.CreateMatch(matchName, matchSize, matchAdvertise, matchPassword, "", "", 0, 0, OnMatchCreate);
+		//networkMatch.CreateMatch(matchName, matchSize, matchAdvertise, matchPassword, "", "", 0, 0, OnMatchCreate);
 	}
 
-	public void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
+	/*public void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
 	{
 		if (success)
 		{
@@ -114,5 +113,5 @@ public class MainMenu : MonoBehaviour
 	public void JoinGame(MatchInfoSnapshot info)
 	{
 		networkMatch.JoinMatch(info.networkId, "", "", "", 0, 0, OnMatchJoined);
-	}
+	}*/
 }

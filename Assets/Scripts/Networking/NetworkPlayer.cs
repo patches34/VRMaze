@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Networking;
+using Mirror;
 
 [RequireComponent (typeof(SpriteRenderer))]
 public class NetworkPlayer : NetworkBehaviour
